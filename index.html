@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <title>Module E</title>
+</head>
+<body>
+  
+  <header>
+    <h1>Welcome LYON</h1>
+    <nav>
+      <a href="#attractions">Attractions</a>
+      <a href="#video">Video</a>
+      <a href="#event">Event</a>
+      <a href="#calendar">Calendar</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#other-info">Other</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="call-to-action">
+      <button id="cta-btn">
+        <span>Call to Action</span>
+        <div class="blob"></div>
+      </button>
+    </section>
+
+    <section id="attractions">
+      <h2>Map Attractions</h2>
+      <div id="map">
+
+        <div class="figures">
+          <figure class="shine" data-id="A">
+            <img src="./images/attraction-a.jpg" alt="">
+            <figcaption>Parc de la Tête D'or</figcaption>
+          </figure>
+
+          <figure class="shine" data-id="B">
+            <img src="./images/attraction-b.jpg" alt="">
+            <figcaption>Attraction B</figcaption>
+          </figure>
+
+          <figure class="shine" data-id="C">
+            <img src="./images/attraction-c.jpg" alt="">
+            <figcaption>Attraction C</figcaption>
+          </figure>
+
+          <figure class="shine" data-id="D">
+            <img src="./images/all-attractions.jpg" alt="">
+            <figcaption>Attraction D</figcaption>
+          </figure>
+        </div>
+
+        <!-- PINS -->
+        <div class="pins">
+          <p class="pin" data-id="A"><span>A</span></p>
+          <p class="pin" data-id="B"><span>B</span></p>
+          <p class="pin" data-id="C"><span>C</span></p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="video">
+      <video src="./videos/lyon.mp4" muted infinite></video>
+    </section>
+
+    <section id="event">
+      <div>
+        <h2>Essential <br> Information</h2>
+        <p>Contact: 04 12 10 30 30</p>
+        <p id="address">Address: Mairie de Lyon, 69205 Lyon cedex 01</p>
+        <button onclick="readAddress()">Read it loud</button>
+      </div>
+
+      <div>
+        <h2>Latest Events</h2>
+
+        <div class="slider">
+
+          <div class="img-container shine">
+            <img src="./latest-events-images/worldskills-2024-p.jpg" alt="">
+            <p>Lyon accueille la finale mondiale des Worldskills 2024</p>
+          </div>
+
+          <div class="img-container shine">
+            <img src="./latest-events-images/fda-p.jpg" alt="">
+            <p>Forum des associations 2024</p>
+          </div>
+
+          <div class="img-container shine">
+            <img src="./latest-events-images/lyon-kayak-p-0.jpg" alt="">
+            <p>Lyon Kayak</p>
+          </div>
+
+          <div class="img-container shine">
+            <img src="./latest-events-images/semaine-bleue-2024-p.jpg" alt="">
+            <p>La semaine bleue 2024</p>
+          </div>
+
+          <div class="img-container">
+            <img src="./latest-events-images/village-des-metiers-p.jpg" alt="">
+            <p>village-des-metiers-p.jpg</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    
+    <section id="calendar">
+      <h2>Calendar</h2>
+
+      <div class="calendar">
+        <div class="header">
+          <button id="cal-prev">Prev</button>
+          <div class="monthYear" id="month-year"></div>
+          <button id="cal-next">Next</button>
+        </div>
+
+        <div class="days">
+          <div class="day">Sun</div>
+          <div class="day">Mon</div>
+          <div class="day">Tue</div>
+          <div class="day">Wed</div>
+          <div class="day">Thu</div>
+          <div class="day">Fri</div>
+          <div class="day">Sat</div>
+        </div>
+
+        <div class="dates" id="dates"></div>
+      </div>
+
+    </section>
+
+     
+    <section id="reviews" class="reviews">
+      <h2 class="section-title">Reviews</h2>
+
+      <div class="review-container">
+          <button id="reviewPrev">&#10094;</button>
+          <div class="review-track" id="reviewTrack"></div>
+          <button id="reviewNext">&#10095;</button>
+      </div>
+    </section>
+
+    <section id="other-info">
+      <h2>Other Information</h2>
+
+      <div class="tab-container">
+        <div class="tabs" role="tablist" aria-label="Example Tabs">
+
+          <button
+            id="tab-1"
+            class="current-tab"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-1"
+          >
+            Tab 1
+          </button>
+
+          <button
+            id="tab-2"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-2"
+            tabindex="-1"
+          >
+            Tab 2
+          </button>
+
+          <button
+            id="tab-3"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-3"
+            tabindex="-1"
+          >
+            Tab 3
+          </button>
+
+        </div>
+
+        <div
+          id="panel-1"
+          class="tab-body"
+          role="tabpanel"
+          aria-labelledby="tab-1"
+          aria-hidden="false"
+        >
+          this is content for Tab 1
+        </div>
+
+        <div
+          id="panel-2"
+          class="tab-body"
+          role="tabpanel"
+          aria-labelledby="tab-2"
+          aria-hidden="true"
+          hidden
+        >
+          this is content for Tab 2
+        </div>
+
+        <div
+          id="panel-3"
+          class="tab-body"
+          role="tabpanel"
+          aria-labelledby="tab-3"
+          aria-hidden="true"
+          hidden
+        >
+          this is content for Tab 3
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+
+      <form action="">
+        <div class="input-group">
+          <label for="first-name">First name</label>
+          <input type="text" id="first-name">
+        </div>
+
+        <div class="input-group">
+          <label for="last-name">Last name</label>
+          <input type="text" id="last-name">
+        </div>
+        
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email">
+        </div>
+
+        <div class="input-group">
+          <label for="phone">Phone</label>
+          <input type="text" id="phone">
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="foot-container">
+
+      <div>
+        <a href="#">About Us</a>
+        <a href="#">Getting Here</a>
+        <a href="#">FAQs</a>
+      </div>
+
+      <div>
+        <a href="#">Places to Stay</a>
+        <a href="#">Things to Do</a>
+        <a href="#">Events Calendar</a>
+      </div>
+
+      <div>
+        <a href="#">Restaurants</a>
+        <a href="#">Nightlife</a>
+        <a href="#">Shopping</a>
+      </div>
+
+      <div>
+        <a href="#">Plan Your Trip</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Newsletter Signup</a>
+      </div>
+
+    </div>
+
+    <p>&copy; 2024. All Rights Reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
