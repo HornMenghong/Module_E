@@ -57,72 +57,62 @@ slider.addEventListener("wheel", (e) => {
 
 // Calendars
 
-const monthYear = document.querySelector('#month-year');
-const dates = document.querySelector('#dates');
-const calNext = document.querySelector('#cal-next');
-const calPrev = document.querySelector('#cal-prev');
+
+const calNext = document.getElementById('cal-next');
+const calPrev = document.getElementById('cal-prev');
+const monthYear = document.getElementById("monthYear");
+const dates = document.getElementById("dates");
 
 let currentDate = new Date();
 
-function updateCalendar() {
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
+function renderCalendar() {
+    dates.innerHTML = "";
 
-  const firstDay = new Date(currentYear, currentMonth, 1);
-  const lastDay = new Date(currentYear, currentMonth + 1, 0);
-  const totalDay = lastDay.getDate();
-  const firstDayIndex = firstDay.getDay();
-  const lastDayIndex = lastDay.getDay();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
-  const monthYearString = currentDate.toLocaleString('default', {month: 'long', year: 'numeric'});
-  monthYear.textContent = monthYearString;
+    monthYear.textContent = currentDate.toLocaleString("default", {
+        month: "long",
+        year: "numeric"
+    });
 
-  let datesHTML = '';
-  for(let i = firstDayIndex; i > 0; i--) {
-    const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
-    datesHTML += `<div class="date inactive">${prevDate.getDate()}</div>`
-  }
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
 
-  for (let i = 1; i <= totalDay; i++) {
-    const date = new Date(currentYear, currentMonth, i);
-
-    const isToday =
-        date.toDateString() === new Date().toDateString();
-
-    const isWeekend =
-        date.getDay() === 0 || date.getDay() === 6;
-
-    let activeClass = "";
-
-    if (isWeekend) {
-      activeClass += "active";
+    // Empty boxes
+    for (let i = 0; i < firstDay; i++) {
+        dates.innerHTML += "<div></div>";
     }
 
-    if (isToday) {
-      activeClass += "today";
+    // Days
+    for (let day = 1; day <= totalDays; day++) {
+        const weekday = new Date(year, month, day).getDay();
+
+        let classes = "";
+        if (weekday === 0 || weekday === 6) classes += " weekend";
+        if (
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+        ) {
+            classes += " today";
+        }
+
+        dates.innerHTML += `<div class="${classes}">${day}</div>`;
     }
-
-    datesHTML += `<div class="date ${activeClass}">${i}</div>`;
 }
 
-  const nextDays = 6 - lastDayIndex;
-  for (let i = 1; i <= nextDays; i++) {
-      datesHTML += `<div class="date inactive">${i}</div>`;
-  }
-
-  dates.innerHTML = datesHTML;
+function changeMonth(step) {
+    currentDate.setMonth(currentDate.getMonth() + step);
+    renderCalendar();
 }
 
-calPrev.addEventListener('click', () => {
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  updateCalendar();
-})
-calNext.addEventListener('click', () => {
-  currentDate.setMonth(currentDate.getMonth() + 1);
-  updateCalendar();
-})
+calPrev.onclick = () => changeMonth(-1);
+calNext.onclick = () => changeMonth(1);
 
-updateCalendar();
+renderCalendar();
+
 
 
 // Reviews
