@@ -117,44 +117,62 @@ renderCalendar();
 
 // Reviews
 
-const reviews = [
-    "Amazing city, loved the food!",
-    "The map made it so easy to find attractions.",
-    "Would visit Lyon again for sure.",
-    "Great events happening all year round.",
-    "Friendly people and beautiful old streets."
-];
-
+const reviewPrev = document.getElementById("reviewPrev");
+const reviewNext = document.getElementById("reviewNext");
 const reviewTrack = document.getElementById("reviewTrack");
+
+let reviews = [];
 let reviewIndex = 0;
 
 function renderReviews() {
-    reviewTrack.innerHTML = "";
+  reviewTrack.innerHTML = "";
 
-    for (let i = -1; i <= 1; i++) {
-        const card = document.createElement("div");
-        card.className = "review-card";
+  if(reviews.length === 0) return;
 
-        if (i === 0) {
-            card.classList.add("center");
-        }
+  for(let i = -1; i <= 1; i++) {
+    const card = document.createElement("div");
+    card.className = "review-card";
+    if(i === 0) card.classList.add("center");
+    const index = (reviewIndex + i + reviews.length) % reviews.length;
+    const review = reviews[index];
 
-        const index = (reviewIndex + i + reviews.length) % reviews.length;
-        card.textContent = reviews[index];
+    card.innerHTML = `
+      <h3>${review.author}</h3>
+      <p>${review.content}</p>
+      <p>Rating: ${review.rating} ${review.rating > 1 ? "stars" : "star"}</p>
+    `;
 
-        reviewTrack.appendChild(card);
-    }
+    reviewTrack.appendChild(card);
+  }
 }
 
 function changeReview(direction) {
-    reviewIndex = (reviewIndex + direction + reviews.length) % reviews.length;
-    renderReviews();
+  reviewIndex = (reviewIndex + direction + reviews.length) % reviews.length;
+
+  renderReviews();
 }
 
-reviewPrev.onclick = () => changeReview(-1);
-reviewNext.onclick = () => changeReview(1);
+reviewPrev.addEventListener("click", () => { changeReview(-1) });
+reviewNext.addEventListener("click", () => { changeReview(1) });
 
-renderReviews();
+async function getReviews() {
+   try {
+    const res = await fetch("./review.json");
+    if(!res.ok) console.error("Couldn't fetch Review");
+    const data = await res.json();
+    return data.reviews;
+  } catch (error) {
+    console.error("Couldn't fetch Review");
+    return [];
+  }
+}
+
+async function initReview() {
+  reviews = await getReviews();
+  renderReviews();
+}
+
+initReview();
 
 
 // Other Tabs
@@ -186,3 +204,25 @@ tabs.forEach(tab => {
     activePanel.hidden = false;
   });
 });
+
+function updateImages(e) {
+  const isSmallScreen = e.matches;
+
+  document.querySelectorAll("img").forEach(img => {
+    if (!img.dataset.originalSrc) {
+      img.dataset.originalSrc = img.src;
+    }
+
+    const originalSrc = img.dataset.originalSrc;
+
+    if(isSmallScreen) {
+      img.src = originalSrc.replace(/(\.[^.]+)$/, "-low-res$1");
+    } else {
+      img.src = originalSrc;
+    }
+  });
+}
+
+mediaQuery.addEventListener("change", updateImages);
+
+updateImages(mediaQuery)
