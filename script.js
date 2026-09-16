@@ -180,28 +180,51 @@ initReview();
 const tabs = document.querySelectorAll('[role="tab"]');
 const panels = document.querySelectorAll('[role="tabpanel"]');
 
+function activateTab(tab) {
+  const targetPanelId = tab.getAttribute('aria-controls');
+
+  tabs.forEach(t => {
+    t.setAttribute('aria-selected', 'false');
+    t.classList.remove('current-tab');
+    t.setAttribute('tabindex', '-1');
+  });
+
+  panels.forEach(panel => {
+    panel.setAttribute('aria-hidden', 'true');
+    panel.hidden = true;
+  });
+
+  tab.setAttribute('aria-selected', 'true');
+  tab.classList.add('current-tab');
+  tab.setAttribute('tabindex', '0');
+
+  const activePanel = document.getElementById(targetPanelId);
+  activePanel.setAttribute('aria-hidden', 'false');
+  activePanel.hidden = false;
+
+  tab.focus();
+}
+
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
-    const targetPanelId = tab.getAttribute('aria-controls');
+    activateTab(tab);
+  });
 
-    tabs.forEach(t => {
-      t.setAttribute('aria-selected', 'false');
-      t.classList.remove('current-tab');
-      t.setAttribute('tabindex', '-1');
-    });
+  tab.addEventListener('keydown', (e) => {
+    const currentIndex = Array.from(tabs).indexOf(tab);
+    let nextIndex;
 
-    panels.forEach(panel => {
-      panel.setAttribute('aria-hidden', 'true');
-      panel.hidden = true;
-    });
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      nextIndex = (currentIndex + 1) % tabs.length;
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    } else {
+      return;
+    }
 
-    tab.setAttribute('aria-selected', 'true');
-    tab.classList.add('current-tab');
-    tab.removeAttribute('tabindex');
-
-    const activePanel = document.getElementById(targetPanelId);
-    activePanel.setAttribute('aria-hidden', 'false');
-    activePanel.hidden = false;
+    activateTab(tabs[nextIndex]);
   });
 });
 
