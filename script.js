@@ -228,6 +228,9 @@ tabs.forEach(tab => {
   });
 });
 
+const maxWidth = 760;
+const mediaQuery = window.matchMedia(`(max-width: ${maxWidth}px)`);
+
 function updateImages(e) {
   const isSmallScreen = e.matches;
 
